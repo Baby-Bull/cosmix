@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
-import { Center, OrbitControls, useGLTF, useHelper } from "@react-three/drei";
+import { OrbitControls, useGLTF } from "@react-three/drei";
 import { useEffect, useRef } from "react";
 import * as THREE from "three";
 import gsap from "gsap";
@@ -13,12 +13,7 @@ function NumberedAxes({ size = 5 }) {
   for (let i = -size; i <= size; i++) {
     if (i !== 0) {
       labels.push(
-        <Text
-          key={`x${i}`}
-          position={[i, 0, 0]}
-          fontSize={0.2}
-          color="red"
-        >
+        <Text key={`x${i}`} position={[i, 0, 0]} fontSize={0.2} color="red">
           {i}
         </Text>
       );
@@ -28,12 +23,7 @@ function NumberedAxes({ size = 5 }) {
   for (let i = -size; i <= size; i++) {
     if (i !== 0) {
       labels.push(
-        <Text
-          key={`y${i}`}
-          position={[0, i, 0]}
-          fontSize={0.2}
-          color="green"
-        >
+        <Text key={`y${i}`} position={[0, i, 0]} fontSize={0.2} color="green">
           {i}
         </Text>
       );
@@ -43,12 +33,7 @@ function NumberedAxes({ size = 5 }) {
   for (let i = -size; i <= size; i++) {
     if (i !== 0) {
       labels.push(
-        <Text
-          key={`z${i}`}
-          position={[0, 0, i]}
-          fontSize={0.2}
-          color="blue"
-        >
+        <Text key={`z${i}`} position={[0, 0, i]} fontSize={0.2} color="blue">
           {i}
         </Text>
       );
@@ -81,9 +66,9 @@ const CameraAnimation = () => {
       // ✅ Animate camera theo progress
       gsap.to(camera.position, {
         // di chuyển camera khi scroll
-        x: 1.55 + progress * 4,   // dịch sang phải
-        y: 1.75 - progress * 1.75,    // hạ xuống
-        z: 1.2 + progress * 1.2,   // lùi ra
+        x: 1.55 + progress * 4, // dịch sang phải
+        y: 1.75 - progress * 1.75, // hạ xuống
+        z: 1.2 + progress * 1.2, // lùi ra
         duration: 1,
         ease: "power2.out",
         onUpdate: () => {
@@ -106,13 +91,11 @@ function Astronaut() {
   const { scene } = useGLTF("/models/astronaut.glb");
   const ref = useRef<THREE.Group>(null!);
 
-
   useFrame(({ clock }) => {
     const t = clock.getElapsedTime();
     const scrollY = window.scrollY;
     const maxScroll = window.innerHeight;
     const progress = Math.min(scrollY / maxScroll, 1);
-    console.log(progress)
     if (ref.current && progress === 1) {
       // Floating effect
       ref.current.position.y = Math.sin(t * 2) * 0.1;
@@ -158,15 +141,9 @@ function Astronaut() {
   }, []);
 
   return (
-    <primitive
-      ref={ref}
-      object={scene}
-      scale={4.5}
-      position={[0, 0, 1.5]}
-    />
+    <primitive ref={ref} object={scene} scale={4.5} position={[0, 0, 1.5]} />
   );
 }
-
 
 export default function FlyingAstro() {
   return (
